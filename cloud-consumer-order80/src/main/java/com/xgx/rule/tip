@@ -1,0 +1,5 @@
+	The CustomConfiguration class must be a @Configuration class,
+	but take care that it is not in a @ComponentScan for the main application context. Otherwise,
+	it is shared by all the @RibbonClients.
+	If you use @ComponentScan (or @SpringBootApplication), you need to take steps to avoid it being included (for instance,
+	you can put it in a separate, non-overlapping package or specify the packages to scan explicitly in the @ComponentScan).
