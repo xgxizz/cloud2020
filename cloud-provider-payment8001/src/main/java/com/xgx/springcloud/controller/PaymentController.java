@@ -2,7 +2,7 @@ package com.xgx.springcloud.controller;
 
 import com.xgx.springcloud.entities.CommonResult;
 import com.xgx.springcloud.entities.Payment;
-import com.xgx.springcloud.service.PaymentService;
+import com.xgx.springcloud.sink.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +54,10 @@ public class PaymentController {
         }
         return serverPort;
     }
-
+    @RequestMapping("/zuul")
+    public String testZuul(){
+        return "Hello Zuul !!!" + serverPort;
+    }
 
 }
  

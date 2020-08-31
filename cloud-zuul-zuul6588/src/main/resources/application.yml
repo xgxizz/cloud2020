@@ -1,0 +1,30 @@
+server:
+  port: 6588
+
+spring:
+  application:
+    name: cloud-zuul
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka
+
+zuul:
+  #ignored-services: '*'  #表示禁用默认路由，只认我们自己配置的路由
+  routes:
+    cloud-payment-service:
+      path: /**  #加上这个配置后，转发后的url为去掉payment的部分
+      #url: http://localhost:8001 #注意这里是url,而不是uri.
+      serviceId: CLOUD-PAYMENT-SERVICE
+
+# 开启所有端点management:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

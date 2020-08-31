@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: zuul-service
+server:
+  port: 7588
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka7001.com:7001/eureka

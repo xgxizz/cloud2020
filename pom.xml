@@ -18,6 +18,15 @@
         <module>cloud-consumer-feign-order80</module>
         <module>cloud-provider-hystrix-payment8001</module>
         <module>cloud-consumer-feign-hystrix-order80</module>
+        <module>cloud-zuul-zuul6588</module>
+        <module>cloud-zuul-service7588</module>
+        <module>cloud-stream-rabbitmq-provider8801</module>
+        <module>cloudalibaba-provider-payment9001</module>
+        <module>cloudalibaba-consumer-nacos-order83</module>
+        <module>cloudalibaba-provider-payment9011</module>
+        <module>cloud-config-nacos-client3377</module>
+        <module>cloud-stream-kafka-provider8901</module>
+        <module>cloud-stream-kafka-consumer8902</module>
     </modules>
     <packaging>pom</packaging>
 

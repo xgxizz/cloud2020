@@ -2,7 +2,7 @@ package com.xgx.springcloud.controller;
 
 import com.xgx.springcloud.entities.CommonResult;
 import com.xgx.springcloud.entities.Payment;
-import com.xgx.springcloud.service.PaymentFeignService;
+import com.xgx.springcloud.sink.PaymentFeignService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
