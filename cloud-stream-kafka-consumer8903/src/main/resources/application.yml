@@ -1,5 +1,5 @@
 server:
-  port: 8901
+  port: 8903
 logging:
   level:
     root: WARN
@@ -7,7 +7,7 @@ logging:
     com.chinadaas: INFO
 spring:
   application:
-    name: cloud-stream-kafka-provider
+    name: cloud-stream-kafka-consumer8903
   cloud:
     stream:
       kafka:
@@ -21,15 +21,16 @@ spring:
         bindings:
           input:
             consumer:
-              autoCommitOffset: true
+              autoCommitOffset: false
       bindings:
-        output:
+        input:
           destination: test_topic_2020
-          content-type: text/plain
-          producer:
-            partitionCount: 3
-            #headerMode: raw
-
+          group: xgx
+          consumer:
+            concurrency: 1
+            partitioned: true
+            auto-bind-dlq: true
+            republish-to-dlq: true
 eureka:
   client:
     register-with-eureka: true

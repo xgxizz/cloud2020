@@ -25,8 +25,10 @@
         <module>cloudalibaba-consumer-nacos-order83</module>
         <module>cloudalibaba-provider-payment9011</module>
         <module>cloud-config-nacos-client3377</module>
-        <module>cloud-stream-kafka-provider8901</module>
         <module>cloud-stream-kafka-consumer8902</module>
+        <module>cloud-stream-kafka-consumer8903</module>
+        <module>cloud-stream-kafka-provider8901</module>
+        <module>cloudalibaba-sentinel-service8401</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -12,7 +12,7 @@ import org.springframework.messaging.SubscribableChannel;
  */
 public interface DataChannel {
 
-    String TOPIC_OUTPUT = "input";//output对应application.yml中的spring.cloud.stream.bindings下的
+    String TOPIC_OUTPUT = "output";//output对应application.yml中的spring.cloud.stream.bindings下的
 
     @Output(TOPIC_OUTPUT)
     MessageChannel dataOutputChannel();

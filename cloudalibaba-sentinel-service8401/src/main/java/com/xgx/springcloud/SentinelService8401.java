@@ -2,15 +2,15 @@ package com.xgx.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-/**
- * Description: <br/>
- * @author: xgx <br/>
- * date: 2020/8/24 15:40 <br/>
- */
+
+@EnableDiscoveryClient
 @SpringBootApplication
-public class StreamKafkaMain8901 {
+public class SentinelService8401 {
     public static void main(String[] args) {
-        SpringApplication.run(StreamKafkaMain8901.class, args);
+        SpringApplication.run(SentinelService8401.class, args);
     }
 }
+ 
+ 

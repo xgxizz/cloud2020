@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-stream-kafka-provider8901</artifactId>
+    <artifactId>cloud-stream-kafka-consumer8903</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

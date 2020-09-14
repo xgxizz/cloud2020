@@ -21,12 +21,14 @@ public class MessageProviderImpl implements IMessageProvider {
     @Override
     public void send() {
 
-        String serial = UUID.randomUUID().toString();
-        JSONObject msg = new JSONObject();
-        msg.put("uuid", UUID.randomUUID().toString());
-        msg.put("msg", "hello.");
-        dataProducer.sendPositionMessage(msg.toJSONString());
-        System.out.println("------------->>serial:" + serial);
+        for (int i = 0; i < 10; i++) {
+            String serial = UUID.randomUUID().toString();
+            JSONObject msg = new JSONObject();
+            msg.put("uuid", "UUID-" + i);
+            msg.put("msg", "hello.");
+            dataProducer.sendPositionMessage(msg.toJSONString());
+            System.out.println("------------->>serial:" + serial);
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -20,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @EnableBinding(DataChannel.class)
 public class MessageSinker {
+
     @Value("${server.port}")
     private String serverPort;
 
@@ -33,16 +35,10 @@ public class MessageSinker {
                          @Header(KafkaHeaders.ACKNOWLEDGMENT) Acknowledgment acknowledgment) {
 
         //初始化 ack
-//        Acknowledgment ack = message.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);
+        Acknowledgment ack = message.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);
         num.incrementAndGet();
         String payload = message.getPayload();
         System.out.println(serverPort + "订阅到的msg:" + payload);
-//        if (num.get()% 2 == 0) {
-//            ack.acknowledge();
-//        }else{
-//            System.out.println("消息：<" + payload + " >未消费。");
-//        }
-
-
+        ack.acknowledge();
     }
 }

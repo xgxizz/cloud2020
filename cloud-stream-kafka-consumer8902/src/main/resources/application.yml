@@ -14,21 +14,59 @@ spring:
         binder:
           brokers: 192.168.137.201:9092,192.168.137.202:9092,192.168.137.203:9092
           configuration:
-            max.poll.records: 10
+            max.poll.records: 10 #一次最大拉取10条
+            #auto.offset.reset: earliest
             max.poll.interval.ms: 50000
             session.timeout.ms: 50000
         bindings:
           input:
-            consumer:
-              autoCommitOffset: true
+            consumer: #配置详情参考链接：https://github.com/spring-cloud/spring-cloud-stream-binder-kafka/blob/master/README.adoc
+              autoCommitOffset: false #控制消息被处理后是否提交offset。当值为true时，可以配置ackEachRecord使用。
+              #如果设置为false,则入站消息中将出现带有kafka_acknowledgment类型org.springframework.kafka.support.Acknowledgment标头关键字的标头。应用程序可以通过
+              #该标头来确认消息（文档中有demo）。此时Kafka binder自动将消息确认模式设置为org.springframework.kafka.listener.AbstractMessageListenerContainer.AckMode.MANUAL，应用程序负责消息确认。
+              autoRebalanceEnabled: true #当如果为true，则topic分区将在消费者组组的成员之间自动重新平衡。
+              #如果为false，将为每个消费者分配基于spring.cloud.stream.instanceCount和spring.cloud.stream.instanceIndex的一组固定分区。
+              #这就要求在每个启动的实例上都正确设置spring.cloud.stream.instanceCount和spring.cloud.stream.instanceIndex属性。
+              #spring.cloud.stream.instanceCount在这种情况下，属性的值通常必须大于1。默认为true
+              ackEachRecord: false #默认为false。这个配置控制每条消息处理后是否提交。默认情况下，如果autoCommitOffset设置为true,
+              #会根据max.poll.records设置的数量的数据全被处理后才进行提交。如果设置为true,则每处理一条数据都会进行提交offset.
+              #优点：但是这样做可以减少发生故障时重新传送记录的可能性。缺点：降低性能。
+              autoCommitOnError: true #只有在autoCommitOffset设置为true时才生效。
+              #如果设置为false，它将抑制导致错误的消息的自动提交，并且仅对成功的消息进行提交。
+              #如果持续出现故障，它允许流从上次成功处理的消息自动重播。
+              #如果设置为true，它将始终自动提交（如果启用了自动提交）。
+              #如果该值未进行设置，则他的value和enableDlq保持一致（如果将错误消息发送到DLQ则自动提交错误消息，否则不提交）
+              #注意：何为DLQ ?死信队列
+              resetOffsets: false #控制是否将消费者的offset重置为startOffset提供的值.如果KafkaRebalanceListener 被提供，则该值必须设置为false.
+              #KafkaRebalanceListener使用：https://github.com/spring-cloud/spring-cloud-stream-binder-kafka/blob/master/README.adoc#rebalance-listener
+              startOffset: latest #对于一个新的消费者组的初始offset,允许有两个值 “earliest” 和 “latest”.
+              #如果在spring.cloud.stream.bindings.<channelName>.group上显示的设置了消费者组，startOffset将被设置为earliest,否则将为anonymous 匿名消费者组设置为latest.
+              enableDlq: false #默认值为false
+              #设置为true时，它将为使用者启用DLQ行为。
+              #默认情况下，导致错误的消息将转发到名为的topic:error.<destination>.<group>。
+              #可以通过设置dlqName属性来配置DLQ topic名称。
+              #当错误数量相对较小并且重放整个原始主题可能太麻烦时，这为更常见的Kafka重播方案提供了一个替代选项。
+              #当destinationIsPattern 设置为true时，该字段不被允许。
+              dlqPartitions: 1 #当enableDlq为true且未设置此属性时，将创建一个死信主题，该主题具有与主要主题相同的分区数.通常，死信记录将发送到死信主题中与原始记录相同的分区。
+              #这种行为可以改变。请参见[dlq-partition-selection:https://github.com/spring-cloud/spring-cloud-stream-binder-kafka/blob/master/README.adoc#dlq-partition-selection]。
+              #如果将此属性设置为1并且没有DqlPartitionFunctionbean，则所有死信记录都将被写入partition 0。
+              #如果此属性大于1，则必须提供一个DlqPartitionFunctionbean。请注意，实际分区数受binder的minPartitionCount属性的影响。
+              configuration:  #包含Kafka consumer通用信息的键值对。除了kafka consumer的属性外，其他任意配置也可以在这里进行配置。
+              dlqName: dlq #DLQ topic的名称(自定义任意名称)
+              dlqProducerPropertie: #使用此功能，可以设置特定于DLQ的生产者属性。通过kafka生产者属性可以使用的所有属性都可以通过该属性设置。(按照我的理解，在这个配置的下方可以设置子配置，子配置同provider)
+              #如果本机编码在消费者上开启，如useNativeDecoding:true,则必须通过dlqProducerProperties.configuration.key.serializer 和 dlqProducerProperties.configuration.value.serializer为DLQ设置序列化。
+              #默认值时provider的配置。
+              standardHeaders: none #指示入站通道适配器填充哪些标准头,允许值：none，id，timestamp，或both。
+              #官网的一句话，感觉很有用，但是不太理解：Useful if using native deserialization and the first component to receive a message needs an id (such as an aggregator that is configured to use a JDBC message store).
+              converterBeanName: MyRecordMessageConverter #实现RecordMessageConverter 的类的名称。在入站通道适配器中用于替换默认适配器MessagingMessageConverter。
+              idleEventInterval: 30000 #指示时间间的时间间隔（ms）
       bindings:
         input:
-          destination: test_topic
-          group: group_gaode
+          destination: test_topic_2020
+          group: xgx
           consumer:
-            concurrency: 3
+            concurrency: 1
             partitioned: true
-            #headerMode: raw
             auto-bind-dlq: true
             republish-to-dlq: true
 eureka:
