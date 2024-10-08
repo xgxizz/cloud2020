@@ -24,11 +24,12 @@
         <module>cloudalibaba-provider-payment9001</module>
         <module>cloudalibaba-consumer-nacos-order83</module>
         <module>cloudalibaba-provider-payment9011</module>
-        <module>cloud-config-nacos-client3377</module>
+        <module>cloud-config-nacos-provider3377</module>
         <module>cloud-stream-kafka-consumer8902</module>
         <module>cloud-stream-kafka-consumer8903</module>
         <module>cloud-stream-kafka-provider8901</module>
         <module>cloudalibaba-sentinel-service8401</module>
+        <module>cloud-config-nacos-consumer3378</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -53,7 +54,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.2.RELEASE</version>
+                <version>2.2.5.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -61,7 +62,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR1</version>
+                <version>Hoxton.SR3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -69,7 +70,7 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.1.0.RELEASE</version>
+                <version>2.2.1.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

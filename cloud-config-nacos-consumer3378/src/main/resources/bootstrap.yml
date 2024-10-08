@@ -1,0 +1,15 @@
+server:
+  port: 3378
+
+spring:
+  application:
+    name: nacos-service-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #服务注册中心地址
+        #register-enabled: false #不将自己注册到注册中心
+#要想实现fallback，需要在此开启hystrix
+feign:
+  hystrix:
+    enabled: true
